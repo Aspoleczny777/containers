@@ -1,0 +1,10 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    ports:
+      - 5002:3000 # Change port
+    volumes:
+      - /apps/Homepage:/app/config # Mapping local config directory
+      # (optional) For docker integrations
+      # - /var/run/docker.sock:/var/run/docker.sock
