@@ -9,4 +9,4 @@ services:
       # (optional) For docker integrations
       # - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: 192.168.x.x:5000 # Setting allowed ip
+      HOMEPAGE_ALLOWED_HOSTS: 192.168.x.x # Setting allowed ip
