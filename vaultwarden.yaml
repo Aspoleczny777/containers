@@ -1,0 +1,44 @@
+services:
+ vaultwarden:
+   image: vaultwarden/server:latest
+   network_mode: bridge
+   ports:
+     - "5001:80"
+   environment:
+   # Setup
+     ADMIN_TOKEN: "${VAULTWARDEN_ADMIN_TOKEN}"       # Admin token for vaultwarden web admin interface
+     DOMAIN: "${VAULTWARDEN_DOMAIN}"                 # The domain (including protocol) where Vaultwarden will be accessed
+   # Usaer privilages
+     SIGNUPS_ALLOWED: "false"                        # Allow new user signups? Set to "false" to disable public signups
+     INVITATIONS_ALLOWED: "false"                    # Allow invitations to new users? Set to "false" to disable invites
+   # Log config section
+     LOG_LEVEL: "info"                               # Log level — good for audit trails
+     EXTENDED_LOGGING: "true"                        # Enable extended logging for more detailed logs
+     LOG_TIMESTAMP_FORMAT: "%Y-%m-%d %H:%M:%S%z"     # Timestamp format for logs (ISO-like)
+     ENABLE_DB_WAL: "true"                           # Enable SQLite Write-Ahead Logging mode for better DB performance
+   # E-mail settings
+     SMTP_HOST: "${SMTP_HOST}"           # SMTP host for sending emails
+     SMTP_FROM: "${SMTP_FROM}"           # Email address shown in the "from" field of emails sent by Vaultwarden
+     SMTP_PORT: "${SMTP_PORT}"           # SMTP port number
+     SMTP_SECURITY: "${SMTP_SECURITY}"   # SMTP security mode (e.g., none, starttls, ssl)
+     SMTP_USERNAME: "${SMTP_USERNAME}"   # Username for SMTP authentication
+     SMTP_PASSWORD: "${SMTP_PASSWORD}"   # Password for SMTP authentication
+   volumes:
+     - vw-data:/data
+     - vaultwarden-logs:/var/log/vaultwarden
+   read_only: true
+   tmpfs:
+     - /tmp
+   security_opt:
+     - no-new-privileges:true
+   restart: unless-stopped      # Automatically restart container unless explicitly stopped
+   logging:
+     driver: "json-file"        # Use Docker’s default JSON file logging driver
+     options:
+       max-size: "10m"          # Rotate log files when they reach 10 megabytes
+       max-file: "3"            # Keep a maximum of 3 rotated log files
+volumes:
+ vw-data:
+   driver: local
+ vaultwarden-logs:
+   driver: local
