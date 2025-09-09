@@ -5,7 +5,7 @@ services:
       - "5002:80"
     volumes:
       - /website/webfiles:/var/www/html
-      - /website/webconfig/default.conf:/etc/nginx/conf.d/default.conf
+      - /website/webconfig/default.conf:/etc/nginx/conf.d/default.conf #Create config file first
     depends_on:
       - php
 
@@ -26,4 +26,5 @@ services:
       - db_data:/var/lib/mysql
 
 volumes:
+
   db_data:
