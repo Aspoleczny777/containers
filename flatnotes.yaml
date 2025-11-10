@@ -1,0 +1,16 @@
+services:
+  flatnotes:
+    image: dullage/flatnotes:latest
+    container_name: flatnotes # Name your container
+    restart: unless-stopped
+    ports:
+      - "8080:8080"  # Map host xxx port to container port 8080
+    environment:
+      - FLATNOTES_AUTH_TYPE=password
+      - FLATNOTES_USERNAME=${user}
+      - FLATNOTES_PASSWORD=${password}
+      - FLATNOTES_SECRET_KEY=${key}
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - /your_path/flatnotes:/data  # Store data persistently here

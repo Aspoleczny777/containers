@@ -1,0 +1,18 @@
+services:
+  freshrss:
+    image: freshrss/freshrss:edge
+    container_name: freshrss  # Name your container
+    restart: unless-stopped
+    ports:
+      - "80:80" # Map host xxx port to container port 8080    
+    environment:
+      - PUID=1000           # set to your user id
+      - PGID=1000           # set to your group id
+      - TZ=Europe/Warsaw    # set your timezone
+      - CRON_MIN=2,32       # cron job minutes for refreshing feeds
+    volumes: 
+    # Store data persistently here
+      - /your_path/freshrss/data:/var/www/FreshRSS/data
+      - /your_path/freshrss/extensions:/var/www/FreshRSS/extensions
+      - /your_path/freshrss/config.custom.php:/var/www/FreshRSS/data/config.custom.php
+      - /your_path/freshrss/config-user.custom.php:/var/www/FreshRSS/data/config-user.custom.php
