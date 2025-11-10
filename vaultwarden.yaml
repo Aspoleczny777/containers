@@ -1,9 +1,11 @@
 services:
  vaultwarden:
    image: vaultwarden/server:latest
+   container_name: vaultwarden # Name your container
+   restart: unless-stopped
    network_mode: bridge
    ports:
-     - "5001:80"
+     - "80:80"
    environment:
    # Setup
      ADMIN_TOKEN: "${VAULTWARDEN_ADMIN_TOKEN}"       # Admin token for vaultwarden web admin interface
@@ -23,9 +25,6 @@ services:
      SMTP_SECURITY: "${SMTP_SECURITY}"   # SMTP security mode (e.g., none, starttls, ssl)
      SMTP_USERNAME: "${SMTP_USERNAME}"   # Username for SMTP authentication
      SMTP_PASSWORD: "${SMTP_PASSWORD}"   # Password for SMTP authentication
-   volumes:
-     - vw-data:/data
-     - vaultwarden-logs:/var/log/vaultwarden
    read_only: true
    tmpfs:
      - /tmp
@@ -37,6 +36,9 @@ services:
      options:
        max-size: "10m"          # Rotate log files when they reach 10 megabytes
        max-file: "3"            # Keep a maximum of 3 rotated log files
+   volumes:
+     - vw-data:/data
+     - vaultwarden-logs:/var/log/vaultwarden
 volumes:
  vw-data:
    driver: local
