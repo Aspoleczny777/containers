@@ -1,12 +1,13 @@
 services:
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
-    container_name: homepage
+    container_name: homepage # Name your container
+    restart: unless-stopped
     ports:
-      - 5001:3000 # Change port
+      - 3000:3000 # Map host xxx port to container port 8080
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: 192.168.x.x:3000 # Setting allowed ip
     volumes:
-      - /apps/Homepage:/app/config # Mapping local config directory
+      - /your_path/homepage:/app/config # Mapping local config directory
       # (optional) For docker integrations
       # - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      HOMEPAGE_ALLOWED_HOSTS: 192.168.x.x:5001 # Setting allowed ip
