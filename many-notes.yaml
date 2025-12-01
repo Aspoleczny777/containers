@@ -35,7 +35,7 @@ services:
       # Laravel internal private storage
       - manynotes_private:/var/www/html/storage/app/private
       # Map host path for actual Markdown notes files
-      - /Docker/manynotes/markdown:/var/www/html/app/notes
+      - /aplikacje/manynotes/markdown:/var/www/html/app/notes
     depends_on:
       - mariadb
 
